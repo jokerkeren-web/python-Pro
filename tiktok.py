@@ -16,7 +16,7 @@ class TikTokAutoBot:
         }
         self.username = zyvellen0
         self.tiktok_url = https://www.tiktok.com/@zyvellen0/video/7684711730638769426
-        self.email = rahuldiaz6@gmail.com
+        self.email = NOVIC4979@GMAIL.COM
         
     def clear_screen(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -91,8 +91,8 @@ class TikTokAutoBot:
         print("\033[1;36m" + "="*60 + "\033[0m")
         print("\033[1;33m🎯 TIKTOK AUTO VIEW - Enter your details:\033[0m")
         
-        self.username = input("\033[1;36m📝 Enter TikTok username @zyvellen0: \033[0m").strip()
-        self.tiktok_url = input("\033[1;36m🔗 Enter TikTok video URL: https://www.tiktok.com/@zyvellen0/video/7684711730638769426 \033[0m").strip()
+        self.username = input("\033[1;36m📝 Enter TikTok username : \033[0m").strip()
+        self.tiktok_url = input("\033[1;36m🔗 Enter TikTok video URL: \033[0m").strip()
         
         print("\033[1;36m" + "="*60 + "\033[0m")
         print(f"\033[1;32m✅ Data saved - Username: {self.username}\033[0m")
