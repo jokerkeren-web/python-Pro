@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TikTok Test Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>TikTok Test Dashboard</h1>
+    <p class="subtitle">Python + Flask Simulation</p>
+
+    <div class="card">
+
+        <label>TikTok Username</label>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="@username"
+        >
+
+        <label>TikTok Video URL</label>
+
+        <input
+            id="videoUrl"
+            type="text"
+            placeholder="https://www.tiktok.com/@username/video/..."
+        >
+
+        <div class="buttons">
+
+            <button class="start" onclick="startSimulation()">
+                START
+            </button>
+
+            <button class="stop" onclick="stopSimulation()">
+                STOP
+            </button>
+
+            <button class="reset" onclick="resetSimulation()">
+                RESET
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card status">
+
+        <div class="status-title">
+            STATUS
+        </div>
+
+        <div id="running">
+            Stopped
+        </div>
+
+        <div class="counter">
+
+            <span>Simulated Views</span>
+
+            <strong id="counter">
+                0
+            </strong>
+
+        </div>
+
+        <div class="info">
+
+            <p>
+                Username:
+                <span id="showUsername">-</span>
+            </p>
+
+            <p>
+                Video:
+                <span id="showVideo">-</span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function startSimulation() {
+
+    const username =
+        document.getElementById("username").value;
+
+    const videoUrl =
+        document.getElementById("videoUrl").value;
+
+    await fetch("/start", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            username: username,
+            video_url: videoUrl
+        })
+
+    });
+
+    updateStatus();
+}
+
+async function stopSimulation() {
+
+    await fetch("/stop", {
+        method: "POST"
+    });
+
+    updateStatus();
+}
+
+async function resetSimulation() {
+
+    await fetch("/reset", {
+        method: "POST"
+    });
+
+    updateStatus();
+}
+
+async function updateStatus() {
+
+    const response =
+        await fetch("/status");
+
+    const data =
+        await response.json();
+
+    document.getElementById("counter").innerText =
+        data.counter;
+
+    document.getElementById("showUsername").innerText =
+        data.username || "-";
+
+    document.getElementById("showVideo").innerText =
+        data.video_url || "-";
+
+    document.getElementById("running").innerText =
+        data.running ? "Running" : "Stopped";
+}
+
+setInterval(updateStatus, 1000);
+
+updateStatus();
+
+</script>
+
+</body>
+</html>
